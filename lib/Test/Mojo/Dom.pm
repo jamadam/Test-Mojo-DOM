@@ -10,6 +10,7 @@ use Mojo::Base 'Test::Mojo';
 package Test::Mojo::Dom::Inspector;
 use Mojo::Base -base;
 use Mojo::DOM;
+use Test::More;
 
   __PACKAGE__->attr('dom');
   
@@ -229,6 +230,9 @@ This is a test tool for Mojo apps on dom structure.
 
 =head2 Test::Mojo::Dom Class
 
+Test::Mojo::Dom inherits all attributes from Test::Mojo and implements the
+following new ones.
+
 =head3 Test::Mojo::Dom->dom_inspector($code_ref)
 
   $t->dom_inspector(sub {
@@ -237,51 +241,66 @@ This is a test tool for Mojo apps on dom structure.
 
 =head2 Test::Mojo::Dom::Inspector Class
 
-=head3 Test::Mojo::Dom::Inspector->new($dom)
+Test::Mojo::Dom::Inspector is a test agent, which allows you to both traversing
+dom nodes and tests on them.
+
+=head3 Attributes
+
+=head4 dom
+
+Mojo::Dom instance within a Collection.
+
+=head3 Constractor
+
+=head4 Test::Mojo::Dom::Inspector->new($dom)
 
 This is called automatcially.
 
-=head3 $instance->at($selector)
+=head3 Traversing
 
-=head3 $instance->children($selector)
+=head4 $instance->at($selector)
 
-=head3 $instance->each($cb)
+=head4 $instance->children($selector)
 
-=head3 $instance->get($number)
+=head4 $instance->each($cb)
 
-=head3 $instance->find($selector)
+=head4 $instance->get($number)
 
-=head3 $instance->parent()
+=head4 $instance->find($selector)
 
-=head3 $instance->root()
+=head4 $instance->parent()
 
-=head3 $instance->text_is($expected, $description)
+=head4 $instance->root()
 
-=head3 $instance->text_isnt($expected, $description)
+=head3 Testing
 
-=head3 $instance->text_like($expected, $description)
+=head4 $instance->text_is($expected, $description)
 
-=head3 $instance->text_unlike($expected, $description)
+=head4 $instance->text_isnt($expected, $description)
 
-=head3 $instance->attr_is($name, $expected, $description)
+=head4 $instance->text_like($expected, $description)
 
-=head3 $instance->attr_isnt($name, $expected, $description)
+=head4 $instance->text_unlike($expected, $description)
 
-=head3 $instance->attr_like($name, $expected, $description)
+=head4 $instance->attr_is($name, $expected, $description)
 
-=head3 $instance->attr_unlike($name, $expected, $description)
+=head4 $instance->attr_isnt($name, $expected, $description)
 
-=head3 $instance->has_attr($name, $description)
+=head4 $instance->attr_like($name, $expected, $description)
 
-=head3 $instance->has_attr_not($name, $description)
+=head4 $instance->attr_unlike($name, $expected, $description)
 
-=head3 $instance->has_child($selector, $description)
+=head4 $instance->has_attr($name, $description)
 
-=head3 $instance->has_child_not($selector, $description)
+=head4 $instance->has_attr_not($name, $description)
 
-=head3 $instance->has_class($name, $description)
+=head4 $instance->has_child($selector, $description)
 
-=head3 $instance->has_class_not($name, $description)
+=head4 $instance->has_child_not($selector, $description)
+
+=head4 $instance->has_class($name, $description)
+
+=head4 $instance->has_class_not($name, $description)
 
 =head1 SEE ALSO
 
