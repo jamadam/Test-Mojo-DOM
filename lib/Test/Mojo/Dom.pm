@@ -71,7 +71,7 @@ Test::Mojo::Dom inherits all attributes from Test::Mojo.
 
 =head1 METHODS
 
-Test::Mojo::Dom inherits all attributes from Test::Mojo and implements the
+Test::Mojo::Dom inherits all methods from Test::Mojo and implements the
 following new ones.
 
 =head2 Test::Mojo::Dom->dom_inspector($code_ref)
