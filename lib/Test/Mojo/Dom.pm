@@ -1,171 +1,10 @@
 package Test::Mojo::Dom;
 use Mojo::Base 'Test::Mojo';
-  
+use Test::Mojo::Dom::Inspector;
+
   sub dom_inspector {
     my ($self, $cb) = @_;
     $cb->(Test::Mojo::Dom::Inspector->new($self->tx->res->dom));
-    return $self;
-  }
-
-package Test::Mojo::Dom::Inspector;
-use Mojo::Base -base;
-use Mojo::DOM;
-use Test::More;
-
-  __PACKAGE__->attr('dom');
-  
-  sub new {
-    my ($class, $dom) = @_;
-    my $self = $class->SUPER::new;
-    if (! $dom->isa('Mojo::Collection')) {
-      $dom = Mojo::Collection->new($dom || Mojo::DOM->new);;
-    }
-    $self->dom($dom);
-    return $self;
-  }
-  
-  sub at {
-    my ($self, $selector) = @_;
-    return __PACKAGE__->new($self->dom->[0]->find($selector));
-  }
-  
-  sub children {
-    my ($self, $selector) = @_;
-    return __PACKAGE__->new($self->dom->[0]->children($selector));
-  }
-  
-  sub each {
-    my ($self, $cb) = @_;
-    return __PACKAGE__->new($self->dom->each(sub {
-      $cb->(__PACKAGE__->new(shift));
-    }));
-  }
-  
-  sub get {
-    my ($self, $index) = @_;
-    return __PACKAGE__->new($self->dom->[$index]);
-  }
-  
-  sub find {
-    my ($self, $selector) = @_;
-    return __PACKAGE__->new($self->dom->[0]->find($selector));
-  }
-  
-  sub parent {
-    my ($self) = @_;
-    return __PACKAGE__->new($self->dom->[0]->parent);
-  }
-  
-  sub root {
-    my ($self) = @_;
-    return __PACKAGE__->new($self->dom->[0]->root);
-  }
-  
-  sub text_is {
-    my ($self, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::is $self->dom->[0]->text, $value, $desc || 'exact match for text';
-    return $self;
-  }
-  
-  sub text_isnt {
-    my ($self, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::isnt $self->dom->[0]->text, $value, $desc || 'no match for text';
-    return $self;
-  }
-  
-  sub text_like {
-    my ($self, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::like $self->dom->[0]->text, $value, $desc || 'text is similar';
-    return $self;
-  }
-  
-  sub text_unlike {
-    my ($self, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::unlike $self->dom->[0]->text, $value, $desc || 'text is not similar';
-    return $self;
-  }
-  
-  sub attr_is {
-    my ($self, $name, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::is $self->dom->[0]->attrs($name),
-                                $value, $desc || 'exact match for attr value';
-    return $self;
-  }
-  
-  sub attr_isnt {
-    my ($self, $name, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::isnt $self->dom->[0]->attrs($name),
-                                    $value, $desc || 'no match for attr value';
-    return $self;
-  }
-  
-  sub attr_like {
-    my ($self, $name, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::like $self->dom->[0]->attrs($name),
-                                      $value, $desc || 'attr value is similar';
-    return $self;
-  }
-  
-  sub attr_unlike {
-    my ($self, $name, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::unlike $self->dom->[0]->attrs($name),
-                                  $value, $desc || 'attr value is not similar';
-    return $self;
-  }
-  
-  sub has_attr {
-    my ($self, $name, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::ok defined $self->dom->[0]->attrs($name),
-                                            $desc || qq/has attribute "$name"/;
-    return $self;
-  }
-  
-  sub has_attr_not {
-    my ($self, $name, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::ok ! defined $self->dom->[0]->attrs($name),
-                                        $desc || qq/has attribute "$name" not/;
-    return $self;
-  }
-  
-  sub has_child {
-    my ($self, $selector, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::ok $self->dom->[0]->at($selector),
-                                            $desc || qq/has child "$selector"/;
-    return $self;
-  }
-  
-  sub has_child_not {
-    my ($self, $selector, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::ok !$self->dom->[0]->at($selector),
-                                        $desc || qq/has child "$selector" not/;
-    return $self;
-  }
-  
-  sub has_class {
-    my ($self, $name, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom->[0]->attrs('class')));
-    Test::More::ok($len, $desc || qq/has child "$name"/);
-    return $self;
-  }
-  
-  sub has_class_not {
-    my ($self, $name, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom->[0]->attrs('class')));
-    Test::More::ok(! $len, $desc || qq/has child "$name"/);
     return $self;
   }
 
@@ -226,81 +65,20 @@ use Test::Mojo::Dom;
 
 This is a test tool for Mojo apps on dom structure.
 
-=head1 METHODS
+=head1 ATTRIBUTES
 
-=head2 Test::Mojo::Dom Class
+Test::Mojo::Dom inherits all attributes from Test::Mojo.
+
+=head1 METHODS
 
 Test::Mojo::Dom inherits all attributes from Test::Mojo and implements the
 following new ones.
 
-=head3 Test::Mojo::Dom->dom_inspector($code_ref)
+=head2 Test::Mojo::Dom->dom_inspector($code_ref)
 
   $t->dom_inspector(sub {
     my $inspector = shift;
   });
-
-=head2 Test::Mojo::Dom::Inspector Class
-
-Test::Mojo::Dom::Inspector is a test agent, which allows you to both traversing
-dom nodes and tests on them.
-
-=head3 Attributes
-
-=head4 dom
-
-Mojo::Dom instance within a Collection.
-
-=head3 Constractor
-
-=head4 Test::Mojo::Dom::Inspector->new($dom)
-
-This is called automatcially.
-
-=head3 Traversing
-
-=head4 $instance->at($selector)
-
-=head4 $instance->children($selector)
-
-=head4 $instance->each($cb)
-
-=head4 $instance->get($number)
-
-=head4 $instance->find($selector)
-
-=head4 $instance->parent()
-
-=head4 $instance->root()
-
-=head3 Testing
-
-=head4 $instance->text_is($expected, $description)
-
-=head4 $instance->text_isnt($expected, $description)
-
-=head4 $instance->text_like($expected, $description)
-
-=head4 $instance->text_unlike($expected, $description)
-
-=head4 $instance->attr_is($name, $expected, $description)
-
-=head4 $instance->attr_isnt($name, $expected, $description)
-
-=head4 $instance->attr_like($name, $expected, $description)
-
-=head4 $instance->attr_unlike($name, $expected, $description)
-
-=head4 $instance->has_attr($name, $description)
-
-=head4 $instance->has_attr_not($name, $description)
-
-=head4 $instance->has_child($selector, $description)
-
-=head4 $instance->has_child_not($selector, $description)
-
-=head4 $instance->has_class($name, $description)
-
-=head4 $instance->has_class_not($name, $description)
 
 =head1 SEE ALSO
 

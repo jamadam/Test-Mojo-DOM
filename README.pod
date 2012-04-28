@@ -51,81 +51,20 @@ use Test::Mojo::Dom;
 
 This is a test tool for Mojo apps on dom structure.
 
-=head1 METHODS
+=head1 ATTRIBUTES
 
-=head2 Test::Mojo::Dom Class
+Test::Mojo::Dom inherits all attributes from Test::Mojo.
+
+=head1 METHODS
 
 Test::Mojo::Dom inherits all attributes from Test::Mojo and implements the
 following new ones.
 
-=head3 Test::Mojo::Dom->dom_inspector($code_ref)
+=head2 Test::Mojo::Dom->dom_inspector($code_ref)
 
   $t->dom_inspector(sub {
     my $inspector = shift;
   });
-
-=head2 Test::Mojo::Dom::Inspector Class
-
-Test::Mojo::Dom::Inspector is a test agent, which allows you to both traversing
-dom nodes and tests on them.
-
-=head3 Attributes
-
-=head4 dom
-
-Mojo::Dom instance within a Collection.
-
-=head3 Constractor
-
-=head4 Test::Mojo::Dom::Inspector->new($dom)
-
-This is called automatcially.
-
-=head3 Traversing
-
-=head4 $instance->at($selector)
-
-=head4 $instance->children($selector)
-
-=head4 $instance->each($cb)
-
-=head4 $instance->get($number)
-
-=head4 $instance->find($selector)
-
-=head4 $instance->parent()
-
-=head4 $instance->root()
-
-=head3 Testing
-
-=head4 $instance->text_is($expected, $description)
-
-=head4 $instance->text_isnt($expected, $description)
-
-=head4 $instance->text_like($expected, $description)
-
-=head4 $instance->text_unlike($expected, $description)
-
-=head4 $instance->attr_is($name, $expected, $description)
-
-=head4 $instance->attr_isnt($name, $expected, $description)
-
-=head4 $instance->attr_like($name, $expected, $description)
-
-=head4 $instance->attr_unlike($name, $expected, $description)
-
-=head4 $instance->has_attr($name, $description)
-
-=head4 $instance->has_attr_not($name, $description)
-
-=head4 $instance->has_child($selector, $description)
-
-=head4 $instance->has_child_not($selector, $description)
-
-=head4 $instance->has_class($name, $description)
-
-=head4 $instance->has_class_not($name, $description)
 
 =head1 SEE ALSO
 
