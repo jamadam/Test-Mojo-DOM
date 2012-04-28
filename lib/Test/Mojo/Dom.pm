@@ -152,16 +152,16 @@ use Mojo::DOM;
   sub has_class {
     my ($self, $name, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::ok grep {$_ eq $name} (split(/\s/, $self->dom->attrs('class'))),
-                                                $desc || qq/has child "$name"/;
+    my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom->attrs('class')));
+    Test::More::ok($len, $desc || qq/has child "$name"/);
     return $self;
   }
   
   sub has_class_not {
     my ($self, $name, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::ok ! grep {$_ eq $name} (split(/\s/, $self->dom->attrs('class'))),
-                                                $desc || qq/has child "$name"/;
+    my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom->attrs('class')));
+    Test::More::ok(! $len, $desc || qq/has child "$name"/);
     return $self;
   }
 
