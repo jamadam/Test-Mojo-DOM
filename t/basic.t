@@ -6,7 +6,7 @@ use lib 'lib';
 use Test::More;
 use Test::Mojo::Dom;
     
-    use Test::More tests => 33;
+    use Test::More tests => 34;
 
     my $t;
 	
@@ -27,6 +27,8 @@ use Test::Mojo::Dom;
 				->has_attr('href')
 				->has_attr('empty')
 				->has_attr_not('not_exists');
+            $t->find('a')->get(1)
+				->text_is('some link2');
             $t->find('a')->each(sub {
 				my $t = shift;
 				$t->text_like(qr{.});

@@ -37,6 +37,11 @@ use Mojo::DOM;
     }));
   }
   
+  sub get {
+    my ($self, $index) = @_;
+    return __PACKAGE__->new($self->{dom}->[$index]);
+  }
+  
   sub find {
     my ($self, $selector) = @_;
     return __PACKAGE__->new($self->{dom}->find($selector));
