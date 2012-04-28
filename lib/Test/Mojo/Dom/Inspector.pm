@@ -173,7 +173,7 @@ Test::Mojo::DOM - Dom test
 
 =head1 SYNOPSIS
 
-use Test::Mojo::DOM::Inspector;
+  use Test::Mojo::DOM::Inspector;
   
   my $t = Test::Mojo::DOM::Inspector->new($dom);
   $t->dom($dom);
