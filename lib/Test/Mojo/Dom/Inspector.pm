@@ -214,7 +214,7 @@ Test::Mojo::DOM - Dom test
 =head1 DESCRIPTION
 
 Test::Mojo::DOM::Inspector is a test agent, which allows you to both traversing
-dom nodes and tests on them.
+dom nodes and test against them.
 
 =head1 ATTRIBUTES
 
