@@ -1,6 +1,6 @@
 =head1 NAME
 
-Test::Mojo::Dom - Dom test
+Test::Mojo::DOM - Dom test
 
 =head1 SYNOPSIS
 

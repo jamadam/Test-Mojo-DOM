@@ -1,55 +1,23 @@
-package Template_Basic;
 use strict;
 use warnings;
 use utf8;
 use lib 'lib';
 use Test::More;
-use Test::Mojo::Dom;
+use Test::Mojo::DOM;
     
-    use Test::More tests => 36;
+    use Test::More tests => 6;
 
     my $t;
     
-    $t = Test::Mojo::Dom->new(MyApp->new);
+    $t = Test::Mojo::DOM->new(MyApp->new);
     $t->get_ok('/')
         ->status_is(200)
         ->dom_inspector(sub {
             my $t = shift;
-            $t->at('a')
-                ->attr_is('href', '../')
-                ->attr_isnt('href', './')
-                ->attr_like('href', qr'\.\./')
-                ->attr_unlike('href', qr'\.\./a')
-                ->text_is('some link')
-                ->text_isnt('some link2')
-                ->text_like(qr'some')
-                ->text_unlike(qr'some2')
-                ->has_attr('href')
-                ->has_attr('empty')
-                ->has_attr_not('not_exists');
-            $t->at('a')->get(1)
-                ->text_is('some link2');
-            $t->at('a:nth-child(2)')
-                ->text_is('some link2');
-            $t->at('a')->each(sub {
-                my $t = shift;
-                $t->text_like(qr{.});
-                $t->text_unlike(qr{a});
-                $t->attr_like('href', qr{.});
-                $t->attr_unlike('href', qr{a});
-            });
-            $t->at('a')->parent->attr_is('id', 'some_p');
-            $t->at('a')->parent->parent->attr_is('id', 'wrapper');
-            $t->at('#some_p')->has_child('a');
-            $t->at('#some_p2')->has_child_not('a');
-            
-            $t->at('#some_img')->has_class('class1');
-            $t->at('#some_img')->has_class('class2');
-            $t->at('#some_img')->has_class('class3');
-            $t->at('#some_img')->has_class_not('class4');
-        });
-    
-    $t->dom_inspector(sub {})
+            ok $t->isa('Test::Mojo::DOM::Inspector'), 'right class';
+            ok $t->dom->isa('Mojo::Collection'), 'right class';
+            ok $t->dom->[0]->isa('Mojo::DOM'), 'right class';
+        })
         ->status_is(200, 'can continue normal tests');
 
 package MyApp;

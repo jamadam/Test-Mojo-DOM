@@ -1,10 +1,10 @@
-package Test::Mojo::Dom;
+package Test::Mojo::DOM;
 use Mojo::Base 'Test::Mojo';
 use Test::Mojo::Dom::Inspector;
 
   sub dom_inspector {
     my ($self, $cb) = @_;
-    $cb->(Test::Mojo::Dom::Inspector->new($self->tx->res->dom));
+    $cb->(Test::Mojo::DOM::Inspector->new($self->tx->res->dom));
     return $self;
   }
 
@@ -14,15 +14,15 @@ __END__
 
 =head1 NAME
 
-Test::Mojo::Dom - Dom test
+Test::Mojo::DOM - DOM test
 
 =head1 SYNOPSIS
 
-use Test::Mojo::Dom;
+use Test::Mojo::DOM;
     
     use Test::More tests => 35;
     
-    my $t = Test::Mojo::Dom->new(MyApp->new);
+    my $t = Test::Mojo::DOM->new(MyApp->new);
     $t->get_ok('/')
         ->status_is(200)
         ->dom_inspector(sub {
@@ -63,18 +63,18 @@ use Test::Mojo::Dom;
 
 =head1 DESCRIPTION
 
-This is a test tool for Mojo apps on dom structure.
+This is a test tool for Mojo apps on DOM structure.
 
 =head1 ATTRIBUTES
 
-Test::Mojo::Dom inherits all attributes from Test::Mojo.
+Test::Mojo::DOM inherits all attributes from Test::Mojo.
 
 =head1 METHODS
 
-Test::Mojo::Dom inherits all methods from Test::Mojo and implements the
+Test::Mojo::DOM inherits all methods from Test::Mojo and implements the
 following new ones.
 
-=head2 Test::Mojo::Dom->dom_inspector($code_ref)
+=head2 Test::Mojo::DOM->dom_inspector($code_ref)
 
   $t->dom_inspector(sub {
     my $inspector = shift;

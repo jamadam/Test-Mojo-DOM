@@ -1,4 +1,4 @@
-package Test::Mojo::Dom::Inspector;
+package Test::Mojo::DOM::Inspector;
 use Mojo::Base -base;
 use Mojo::DOM;
 use Test::More;
@@ -8,6 +8,9 @@ use Test::More;
   sub new {
     my ($class, $dom) = @_;
     my $self = $class->SUPER::new;
+    if (! ref $dom) {
+      $dom = Mojo::DOM->new($dom);
+    }
     if (! $dom->isa('Mojo::Collection')) {
       $dom = Mojo::Collection->new($dom || Mojo::DOM->new);;
     }
@@ -166,13 +169,13 @@ __END__
 
 =head1 NAME
 
-Test::Mojo::Dom - Dom test
+Test::Mojo::DOM - Dom test
 
 =head1 SYNOPSIS
 
-use Test::Mojo::Dom::Inspector;
+use Test::Mojo::DOM::Inspector;
   
-  my $t = Test::Mojo::Dom::Inspector->new($dom);
+  my $t = Test::Mojo::DOM::Inspector->new($dom);
   $t->dom($dom);
   
   $t->at('a')
@@ -210,18 +213,18 @@ use Test::Mojo::Dom::Inspector;
 
 =head1 DESCRIPTION
 
-Test::Mojo::Dom::Inspector is a test agent, which allows you to both traversing
+Test::Mojo::DOM::Inspector is a test agent, which allows you to both traversing
 dom nodes and tests on them.
 
 =head1 ATTRIBUTES
 
 =head2 dom
 
-Mojo::Dom instance within a Collection.
+Mojo::DOM instance within a Collection.
 
 =head1 METHODS
 
-=head2 Test::Mojo::Dom::Inspector->new($dom)
+=head2 Test::Mojo::DOM::Inspector->new($dom)
 
 This is called automatcially.
 
