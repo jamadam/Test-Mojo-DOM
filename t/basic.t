@@ -13,7 +13,7 @@ use Test::Mojo::Dom;
     $t = Test::Mojo::Dom->new(MyApp->new);
     $t->get_ok('/')
         ->status_is(200)
-        ->test_dom(sub {
+        ->dom_inspector(sub {
             my $t = shift;
             $t->at('a')
                 ->attr_is('href', '../')
@@ -49,7 +49,7 @@ use Test::Mojo::Dom;
             $t->at('#some_img')->has_class_not('class4');
         });
     
-    $t->test_dom(sub {})
+    $t->dom_inspector(sub {})
         ->status_is(200, 'can continue normal tests');
 
 package MyApp;
