@@ -6,7 +6,7 @@ use lib 'lib';
 use Test::More;
 use Test::Mojo::Dom;
     
-    use Test::More tests => 34;
+    use Test::More tests => 35;
 
     my $t;
 	
@@ -27,9 +27,11 @@ use Test::Mojo::Dom;
 				->has_attr('href')
 				->has_attr('empty')
 				->has_attr_not('not_exists');
-            $t->find('a')->get(1)
+            $t->at('a')->get(1)
 				->text_is('some link2');
-            $t->find('a')->each(sub {
+			$t->at('a:nth-child(2)')
+				->text_is('some link2');
+            $t->at('a')->each(sub {
 				my $t = shift;
 				$t->text_like(qr{.});
 				$t->text_unlike(qr{a});
@@ -45,6 +47,8 @@ use Test::Mojo::Dom;
 			$t->at('#some_img')->has_class('class2');
 			$t->at('#some_img')->has_class('class3');
 			$t->at('#some_img')->has_class_not('class4');
+			
+			
         });
 
 package MyApp;
@@ -71,6 +75,5 @@ use base 'Mojo';
 EOF
 		$tx->resume;
 	}
-
 
 __END__
