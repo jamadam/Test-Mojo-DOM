@@ -6,7 +6,7 @@ use lib 'lib';
 use Test::More;
 use Test::Mojo::Dom;
     
-    use Test::More tests => 35;
+    use Test::More tests => 36;
 
     my $t;
     
@@ -47,9 +47,10 @@ use Test::Mojo::Dom;
             $t->at('#some_img')->has_class('class2');
             $t->at('#some_img')->has_class('class3');
             $t->at('#some_img')->has_class_not('class4');
-            
-            
         });
+    
+    $t->test_dom(sub {})
+        ->status_is(200, 'can continue normal tests');
 
 package MyApp;
 use strict;

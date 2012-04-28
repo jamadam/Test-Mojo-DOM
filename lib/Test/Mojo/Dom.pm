@@ -3,8 +3,8 @@ use Mojo::Base 'Test::Mojo';
   
   sub test_dom {
     my ($self, $cb) = @_;
-    #local $Test::Builder::Level = $Test::Builder::Level + 1;
     $cb->(Test::Mojo::Dom::_Test->new($self->tx->res->dom));
+    return $self;
   }
 
 package Test::Mojo::Dom::_Test;
