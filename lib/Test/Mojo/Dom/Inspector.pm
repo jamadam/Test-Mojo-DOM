@@ -7,7 +7,7 @@ use Test::More;
     my ($class, $dom) = @_;
     my $self = $class->SUPER::new;
     if (! ref $dom) {
-      $dom = Mojo::DOM->new($dom || Mojo::DOM->new);
+      $dom = Mojo::DOM->new($dom);
     }
     if (! $dom->isa('Mojo::Collection')) {
       $dom = Mojo::Collection->new($dom);
