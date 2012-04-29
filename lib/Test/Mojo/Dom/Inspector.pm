@@ -2,30 +2,36 @@ package Test::Mojo::DOM::Inspector;
 use Mojo::Base -base;
 use Mojo::DOM;
 use Test::More;
-
-  __PACKAGE__->attr('dom');
   
   sub new {
     my ($class, $dom) = @_;
     my $self = $class->SUPER::new;
     if (! ref $dom) {
-      $dom = Mojo::DOM->new($dom);
+      $dom = Mojo::DOM->new($dom || Mojo::DOM->new);
     }
     if (! $dom->isa('Mojo::Collection')) {
-      $dom = Mojo::Collection->new($dom || Mojo::DOM->new);;
+      $dom = Mojo::Collection->new($dom);
     }
-    $self->dom($dom);
+    $self->{dom} = $dom;
     return $self;
+  }
+  
+  sub dom {
+    my ($self, $index) = @_;
+    if (defined $index) {
+      return $self->{dom}->[$index];
+    }
+    return $self->{dom};
   }
   
   sub at {
     my ($self, $selector) = @_;
-    return __PACKAGE__->new($self->dom->[0]->find($selector));
+    return __PACKAGE__->new($self->dom(0)->find($selector));
   }
   
   sub children {
     my ($self, $selector) = @_;
-    return __PACKAGE__->new($self->dom->[0]->children($selector));
+    return __PACKAGE__->new($self->dom(0)->children($selector));
   }
   
   sub each {
@@ -37,56 +43,56 @@ use Test::More;
   
   sub get {
     my ($self, $index) = @_;
-    return __PACKAGE__->new($self->dom->[$index]);
+    return __PACKAGE__->new($self->dom($index));
   }
   
   sub find {
     my ($self, $selector) = @_;
-    return __PACKAGE__->new($self->dom->[0]->find($selector));
+    return __PACKAGE__->new($self->dom(0)->find($selector));
   }
   
   sub parent {
     my ($self) = @_;
-    return __PACKAGE__->new($self->dom->[0]->parent);
+    return __PACKAGE__->new($self->dom(0)->parent);
   }
   
   sub root {
     my ($self) = @_;
-    return __PACKAGE__->new($self->dom->[0]->root);
+    return __PACKAGE__->new($self->dom(0)->root);
   }
   
   sub text_is {
     my ($self, $value, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::is $self->dom->[0]->text, $value, $desc || 'exact match for text';
+    Test::More::is $self->dom(0)->text, $value, $desc || 'exact match for text';
     return $self;
   }
   
   sub text_isnt {
     my ($self, $value, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::isnt $self->dom->[0]->text, $value, $desc || 'no match for text';
+    Test::More::isnt $self->dom(0)->text, $value, $desc || 'no match for text';
     return $self;
   }
   
   sub text_like {
     my ($self, $value, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::like $self->dom->[0]->text, $value, $desc || 'text is similar';
+    Test::More::like $self->dom(0)->text, $value, $desc || 'text is similar';
     return $self;
   }
   
   sub text_unlike {
     my ($self, $value, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::unlike $self->dom->[0]->text, $value, $desc || 'text is not similar';
+    Test::More::unlike $self->dom(0)->text, $value, $desc || 'text is not similar';
     return $self;
   }
   
   sub attr_is {
     my ($self, $name, $value, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::is $self->dom->[0]->attrs($name),
+    Test::More::is $self->dom(0)->attrs($name),
                                 $value, $desc || 'exact match for attr value';
     return $self;
   }
@@ -94,7 +100,7 @@ use Test::More;
   sub attr_isnt {
     my ($self, $name, $value, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::isnt $self->dom->[0]->attrs($name),
+    Test::More::isnt $self->dom(0)->attrs($name),
                                     $value, $desc || 'no match for attr value';
     return $self;
   }
@@ -102,7 +108,7 @@ use Test::More;
   sub attr_like {
     my ($self, $name, $value, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::like $self->dom->[0]->attrs($name),
+    Test::More::like $self->dom(0)->attrs($name),
                                       $value, $desc || 'attr value is similar';
     return $self;
   }
@@ -110,7 +116,7 @@ use Test::More;
   sub attr_unlike {
     my ($self, $name, $value, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::unlike $self->dom->[0]->attrs($name),
+    Test::More::unlike $self->dom(0)->attrs($name),
                                   $value, $desc || 'attr value is not similar';
     return $self;
   }
@@ -118,7 +124,7 @@ use Test::More;
   sub has_attr {
     my ($self, $name, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::ok defined $self->dom->[0]->attrs($name),
+    Test::More::ok defined $self->dom(0)->attrs($name),
                                             $desc || qq/has attribute "$name"/;
     return $self;
   }
@@ -126,7 +132,7 @@ use Test::More;
   sub has_attr_not {
     my ($self, $name, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::ok ! defined $self->dom->[0]->attrs($name),
+    Test::More::ok ! defined $self->dom(0)->attrs($name),
                                         $desc || qq/has attribute "$name" not/;
     return $self;
   }
@@ -134,7 +140,7 @@ use Test::More;
   sub has_child {
     my ($self, $selector, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::ok $self->dom->[0]->at($selector),
+    Test::More::ok $self->dom(0)->at($selector),
                                             $desc || qq/has child "$selector"/;
     return $self;
   }
@@ -142,7 +148,7 @@ use Test::More;
   sub has_child_not {
     my ($self, $selector, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::ok !$self->dom->[0]->at($selector),
+    Test::More::ok !$self->dom(0)->at($selector),
                                         $desc || qq/has child "$selector" not/;
     return $self;
   }
@@ -150,7 +156,7 @@ use Test::More;
   sub has_class {
     my ($self, $name, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom->[0]->attrs('class')));
+    my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom(0)->attrs('class')));
     Test::More::ok($len, $desc || qq/has child "$name"/);
     return $self;
   }
@@ -158,7 +164,7 @@ use Test::More;
   sub has_class_not {
     my ($self, $name, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
-    my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom->[0]->attrs('class')));
+    my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom(0)->attrs('class')));
     Test::More::ok(! $len, $desc || qq/has child "$name"/);
     return $self;
   }
