@@ -1,6 +1,6 @@
 package Test::Mojo::DOM;
 use Mojo::Base 'Test::Mojo';
-use Test::Mojo::Dom::Inspector;
+use Test::Mojo::DOM::Inspector;
 
   sub dom_inspector {
     my ($self, $cb) = @_;
