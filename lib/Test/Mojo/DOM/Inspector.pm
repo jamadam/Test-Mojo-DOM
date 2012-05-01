@@ -36,9 +36,10 @@ use Test::More;
   
   sub each {
     my ($self, $cb) = @_;
-    return __PACKAGE__->new($self->dom->each(sub {
+    $self->dom->each(sub {
       $cb->(__PACKAGE__->new(shift), shift);
-    }));
+    });
+    return $self;
   }
   
   sub get {
