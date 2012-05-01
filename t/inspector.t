@@ -5,15 +5,15 @@ use lib 'lib';
 use Test::More;
 use Test::Mojo::DOM::Inspector;
 
-    use Test::More tests => 36;
+    use Test::More tests => 39;
 
     my $t = Test::Mojo::DOM::Inspector->new(<<EOF);
 <body>
     <div id="wrapper">
         <p id="some_p">
-            <a href="../" empty="">some link</a>
-            <a href="../">some link2</a>
-            <a href="../">some link3</a>
+            <a class="a1" href="../" empty="">some link</a>
+            <a class="a2" href="../">some link2</a>
+            <a class="a3" href="../">some link3</a>
         </p>
         <p id="some_p2">
         </p>
@@ -38,8 +38,9 @@ EOF
         ->text_is('some link2');
     $t->at('a:nth-child(2)')
         ->text_is('some link2');
-    $t->at('a')->each(sub {
-        my $t = shift;
+    $t->at('#some_p a')->each(sub {
+        my ($t, $idx) = @_;
+        $t->has_class('a'. $idx);
         $t->text_like(qr{.});
         $t->text_unlike(qr{a});
         $t->attr_like('href', qr{.});
