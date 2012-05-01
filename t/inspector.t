@@ -5,7 +5,7 @@ use lib 'lib';
 use Test::More;
 use Test::Mojo::DOM::Inspector;
 
-    use Test::More tests => 39;
+    use Test::More tests => 42;
 
     my $t = Test::Mojo::DOM::Inspector->new(<<EOF);
 <body>
@@ -46,6 +46,12 @@ EOF
         $t->attr_like('href', qr{.});
         $t->attr_unlike('href', qr{a});
         $t->parent->attr_is('id', 'some_p');
+        $t->at('a')->each(sub {
+            ok 1, 'recursive';
+        });
+    });
+    $t->at('nonexists')->each(sub {
+        ok 0, 'should not be invoked';
     });
     $t->at('a')->parent->attr_is('id', 'some_p');
     $t->at('a')->parent->parent->attr_is('id', 'wrapper');
