@@ -181,8 +181,8 @@ Test::Mojo::DOM - Dom test
 
   use Test::Mojo::DOM::Inspector;
   
-  my $t = Test::Mojo::DOM::Inspector->new($dom);
-  $t->dom($dom);
+  my $t = Test::Mojo::DOM::Inspector->new($mojo_dom);
+  my $t = Test::Mojo::DOM::Inspector->new($html_in_string);
   
   $t->at('a')
       ->attr_is('href', '../')
@@ -222,17 +222,19 @@ Test::Mojo::DOM - Dom test
 Test::Mojo::DOM::Inspector is a test agent, which allows you to both traversing
 dom nodes and test against them.
 
-=head1 ATTRIBUTES
-
-=head2 dom
-
-Mojo::DOM instance within a Collection.
-
 =head1 METHODS
 
 =head2 Test::Mojo::DOM::Inspector->new($dom)
 
 This is called automatcially.
+
+  my $t = Test::Mojo::DOM::Inspector->new($dom);
+
+or
+
+  my $t = Test::Mojo::DOM::Inspector->new($html);
+
+=head2 $instance->dom($index)
 
 =head2 Traversing
 
