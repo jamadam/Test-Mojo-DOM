@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Komodo Project File - DO NOT EDIT -->
 <project id="9bb106f6-0bd4-4537-aa18-ce49ac65e18b" kpf_version="5" name="Test-Mojo-DOM.komodoproject">
+<preference-set idref="9bb106f6-0bd4-4537-aa18-ce49ac65e18b">
+  <string id="perlDefaultInterpreter"></string>
+  <string relative="path" id="perlExtraPaths">lib;C:/strawberry/perl/site/lib;C:/strawberry/perl/vendor/lib;C:/strawberry/perl/lib</string>
+  <boolean id="perl_lintOption_includeCurrentDirForLinter">1</boolean>
+</preference-set>
 </project>

@@ -158,7 +158,7 @@ use Test::More;
     my ($self, $name, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom(0)->attrs('class')));
-    Test::More::ok($len, $desc || qq/has child "$name"/);
+    Test::More::ok($len, $desc || qq/has class "$name"/);
     return $self;
   }
   
@@ -166,7 +166,7 @@ use Test::More;
     my ($self, $name, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom(0)->attrs('class')));
-    Test::More::ok(! $len, $desc || qq/has child "$name"/);
+    Test::More::ok(! $len, $desc || qq/has class "$name"/);
     return $self;
   }
 
