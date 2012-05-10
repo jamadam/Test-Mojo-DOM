@@ -62,34 +62,6 @@ use Test::More;
     return __PACKAGE__->new($self->dom(0)->root);
   }
   
-  sub text_is {
-    my ($self, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::is $self->dom(0)->text, $value, $desc || 'exact match for text';
-    return $self;
-  }
-  
-  sub text_isnt {
-    my ($self, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::isnt $self->dom(0)->text, $value, $desc || 'no match for text';
-    return $self;
-  }
-  
-  sub text_like {
-    my ($self, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::like $self->dom(0)->text, $value, $desc || 'text is similar';
-    return $self;
-  }
-  
-  sub text_unlike {
-    my ($self, $value, $desc) = @_;
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    Test::More::unlike $self->dom(0)->text, $value, $desc || 'text is not similar';
-    return $self;
-  }
-  
   sub attr_is {
     my ($self, $name, $value, $desc) = @_;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
@@ -119,6 +91,48 @@ use Test::More;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     Test::More::unlike $self->dom(0)->attrs($name),
                                   $value, $desc || 'attr value is not similar';
+    return $self;
+  }
+  
+  sub content_xml_is {
+    my ($self, $value, $desc) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::is $self->dom(0)->content_xml, $value, $desc || 'exact match for xml';
+    return $self;
+  }
+  
+  sub content_xml_isnt {
+    my ($self, $value, $desc) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::isnt $self->dom(0)->content_xml, $value, $desc || 'no match for xml';
+    return $self;
+  }
+  
+  sub content_xml_like {
+    my ($self, $value, $desc) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::like $self->dom(0)->content_xml, $value, $desc || 'xml is similar';
+    return $self;
+  }
+  
+  sub content_xml_unlike {
+    my ($self, $value, $desc) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::unlike $self->dom(0)->content_xml, $value, $desc || 'xml is not similar';
+    return $self;
+  }
+  
+  sub element_exists {
+    my ($self, $desc) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::ok $self->dom(0) , $desc || 'element exists';
+    return $self;
+  }
+  
+  sub element_exists_not {
+    my ($self, $desc) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::ok ! $self->dom(0) , $desc || 'element not exists';
     return $self;
   }
   
@@ -167,6 +181,34 @@ use Test::More;
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my $len = scalar grep {$_ eq $name} (split(/\s/, $self->dom(0)->attrs('class')));
     Test::More::ok(! $len, $desc || qq/has class "$name"/);
+    return $self;
+  }
+  
+  sub text_is {
+    my ($self, $value, $desc) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::is $self->dom(0)->text, $value, $desc || 'exact match for text';
+    return $self;
+  }
+  
+  sub text_isnt {
+    my ($self, $value, $desc) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::isnt $self->dom(0)->text, $value, $desc || 'no match for text';
+    return $self;
+  }
+  
+  sub text_like {
+    my ($self, $value, $desc) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::like $self->dom(0)->text, $value, $desc || 'text is similar';
+    return $self;
+  }
+  
+  sub text_unlike {
+    my ($self, $value, $desc) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    Test::More::unlike $self->dom(0)->text, $value, $desc || 'text is not similar';
     return $self;
   }
 
@@ -218,6 +260,14 @@ Test::Mojo::DOM - Dom test
   $t->at('#some_img')->has_class('class3');
   $t->at('#some_img')->has_class_not('class4');
 
+  $t->at('#some_img')->element_exists;
+  $t->at('#some_img')->element_exists_not;
+
+  $t->at('#some_img')->content_xml_is;
+  $t->at('#some_img')->content_xml_isnt;
+  $t->at('#some_img')->content_xml_like;
+  $t->at('#some_img')->content_xml_unlike;
+
 =head1 DESCRIPTION
 
 Test::Mojo::DOM::Inspector is a test agent, which allows you to both traversing
@@ -255,14 +305,6 @@ or
 
 =head2 Testing
 
-=head3 $instance->text_is($expected, $description)
-
-=head3 $instance->text_isnt($expected, $description)
-
-=head3 $instance->text_like($expected, $description)
-
-=head3 $instance->text_unlike($expected, $description)
-
 =head3 $instance->attr_is($name, $expected, $description)
 
 =head3 $instance->attr_isnt($name, $expected, $description)
@@ -270,6 +312,18 @@ or
 =head3 $instance->attr_like($name, $expected, $description)
 
 =head3 $instance->attr_unlike($name, $expected, $description)
+
+=head3 $instance->content_xml_is
+
+=head3 $instance->content_xml_isnt
+
+=head3 $instance->content_xml_like
+
+=head3 $instance->content_xml_unlike
+
+=head3 $instance->element_exists
+
+=head3 $instance->element_exists_not
 
 =head3 $instance->has_attr($name, $description)
 
@@ -282,6 +336,14 @@ or
 =head3 $instance->has_class($name, $description)
 
 =head3 $instance->has_class_not($name, $description)
+
+=head3 $instance->text_is($expected, $description)
+
+=head3 $instance->text_isnt($expected, $description)
+
+=head3 $instance->text_like($expected, $description)
+
+=head3 $instance->text_unlike($expected, $description)
 
 =head1 SEE ALSO
 
