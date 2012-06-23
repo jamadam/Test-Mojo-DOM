@@ -19,7 +19,7 @@ use Test::More;
   sub dom {
     my ($self, $index) = @_;
     if (defined $index) {
-      return $self->{dom}->[$index];
+      return $self->{dom}->[$index] || Mojo::DOM->new;
     }
     return $self->{dom};
   }
