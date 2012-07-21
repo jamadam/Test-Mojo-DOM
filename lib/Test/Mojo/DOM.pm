@@ -1,7 +1,7 @@
 package Test::Mojo::DOM;
 use Mojo::Base 'Test::Mojo';
 use Test::Mojo::DOM::Inspector;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
   sub dom_inspector {
     my ($self, $cb) = @_;
