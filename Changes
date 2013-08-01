@@ -1,5 +1,8 @@
 Revision history for Test::Mojo::Dom
 
+0.04 2013/08/01
+  - Updated API usage in favor of mojo v4.13
+
 0.03 2012/06/29
   - Changed attr existance tests that only true values are treated as 'exist'.
 
