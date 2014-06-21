@@ -76,6 +76,8 @@ following new ones.
 
 =head2 Test::Mojo::DOM->dom_inspector($code_ref)
 
+Calls the callback with Test::Mojo::DOM::Inspector instance.
+
   $t->dom_inspector(sub {
     my $inspector = shift;
   });

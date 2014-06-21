@@ -287,9 +287,9 @@ or
 
   my $t = Test::Mojo::DOM::Inspector->new($html);
 
-=head2 $instance->dom($index)
-
 =head2 Traversing
+
+=head3 $instance->dom($index)
 
 =head3 $instance->at($selector)
 
@@ -315,17 +315,17 @@ or
 
 =head3 $instance->attr_unlike($name, $expected, $description)
 
-=head3 $instance->content_xml_is
+=head3 $instance->content_xml_is($expected, $description)
 
-=head3 $instance->content_xml_isnt
+=head3 $instance->content_xml_isnt($expected, $description)
 
-=head3 $instance->content_xml_like
+=head3 $instance->content_xml_like($expected, $description)
 
-=head3 $instance->content_xml_unlike
+=head3 $instance->content_xml_unlike($expected, $description)
 
-=head3 $instance->element_exists
+=head3 $instance->element_exists($description)
 
-=head3 $instance->element_exists_not
+=head3 $instance->element_exists_not($description)
 
 =head3 $instance->has_attr($name, $description)
 
